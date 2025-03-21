@@ -1,0 +1,56 @@
+service: weather-astro-conditions
+frameworkVersion: '3'
+configValidationMode: error
+useDotenv: true
+
+plugins:
+  - serverless-python-requirements
+
+package:
+  individually: true
+  exclude:
+    - 'node_modules/**'
+    - 'venv/**'
+    - 'layers/**'
+    - '**.ipynb'
+    - '**.pdf'
+    - '**.zip'
+
+provider:
+  name: aws
+  runtime: python3.11
+  deploymentMethod: direct
+  region: us-east-1
+  memorySize: 256
+  timeout: 300
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - ses:SendEmail
+            - ses:SendRawEmail
+          Resource: '*'
+  environment:
+    OPENWEATHERMAP_API_KEY: ${env:OPENWEATHERMAP_API_KEY}
+    LATITUDE: ${env:LATITUDE}
+    LONGITUDE: ${env:LONGITUDE}
+    SES_FROM_EMAIL: ${env:SES_FROM_EMAIL}
+    SES_TO_EMAIL: ${env:SES_TO_EMAIL}
+
+custom:
+  pythonRequirements:
+    layer: true
+    usePipenv: true
+
+
+functions:
+  weatherStatus:
+    handler: main_sls.lambda_handler
+    events:
+      # Schedule to run every day at 11:00 AM UTC and 20:00 PM UTC
+      - schedule: cron(0 11 * * ? *)
+      - schedule: cron(0 20 * * ? *)
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+

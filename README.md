@@ -64,3 +64,12 @@ Condições noturnas (20h às 6h):
   Probabilidade de precipitação (pop): 0 -> Bom
 Condições noturnas: Não favoráveis
 ```
+
+## Automatização com AWS Lambda + Event Bridge + SES
+
+É possível configurar o script para rodar diariamente na AWS e enviar o status para o e-mail através do SES
+**É importante ter o serviço SES configurado e liberado na sua conta da AWS**
+
+```bash
+npm run deploy -- --aws-profile default
+```

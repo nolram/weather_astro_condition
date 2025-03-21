@@ -1,0 +1,17 @@
+{
+  "name": "weather_astro_condition",
+  "version": "1.0.0",
+  "description": "Este projeto utiliza a API One Call do OpenWeatherMap para obter dados meteorológicos e avaliar se as condições estão favoráveis para observações astronômicas. Ele analisa parâmetros como cobertura de nuvens, precipitação, umidade, velocidade do vento, probabilidade de precipitação (pop) e fase da Lua, além de realizar uma análise específica para o período noturno (das 20h às 6h, horário local).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "serverless deploy --stage dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^3.40.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-python-requirements": "^6.1.2"
+  }
+}
